@@ -7,10 +7,10 @@ export default function Cadastro() {
   document.body.style.margin = "0";
   document.body.style.height = "100vh";
   document.body.style.background =
-    "linear-gradient(80deg, rgba(191,113,209,1) 0%, rgba(255, 152, 216, 0.9) 60%, rgba(255, 152, 216, 1) 100%)";
+    "linear-gradient(80deg, rgba(191,113,209,1) 0%, rgba(224, 134, 207, 0.9) 40%, rgba(255, 152, 216, 0.9) 60%, rgba(255, 152, 216, 1) 100%)";
 
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -79,7 +79,7 @@ const StyledLogin = styled.main`
   }
 
   .entrada:focus {
-    border: 1px solid #fff; /* Mantém a cor da borda ao focar */
+    border: 1px solid #fff;
     box-shadow: none;
   }
 
