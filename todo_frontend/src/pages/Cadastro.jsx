@@ -14,7 +14,7 @@ export default function Cadastro() {
   };
 
   return (
-    <StyledLogin>
+    <StyledCadastro>
       <div className="imagem-fundo"></div>
       <p>Olá 👋!</p>
       <p className="titulo">Vamos começar</p>
@@ -35,11 +35,11 @@ export default function Cadastro() {
           FAZER LOGIN
         </button>
       </div>
-    </StyledLogin>
+    </StyledCadastro>
   );
 }
 
-const StyledLogin = styled.main`
+const StyledCadastro = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
