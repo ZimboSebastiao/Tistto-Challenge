@@ -1,8 +1,28 @@
+// pages/Cadastro.jsx
+
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import handleRegister from "../components/Register";
 
 export default function Cadastro() {
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const oncadastroSubmit = async (e) => {
+    e.preventDefault();
+
+    const success = await handleRegister(nome, email, senha);
+    if (success) {
+      navigate("/");
+    } else {
+      console.log("Falha ao fazer o cadastro");
+      setError("Falha ao fazer o cadastro");
+    }
+  };
 
   document.body.style.margin = "0";
   document.body.style.height = "100vh";
@@ -20,11 +40,33 @@ export default function Cadastro() {
       <p className="titulo">Vamos começar</p>
 
       {/* INPUTS DE ENTRADA */}
-      <div className="inputs">
-        <input className="entrada" placeholder="Nome" />
-        <input className="entrada" type="email" placeholder="E-mail" />
-        <input className="entrada" type="password" placeholder="Senha" />
-        <button className="botao">CADASTRAR</button>
+      <form className="inputs" onSubmit={oncadastroSubmit}>
+        <input
+          className="entrada"
+          placeholder="Nome"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          required
+        />
+        <input
+          className="entrada"
+          type="email"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          className="entrada"
+          type="password"
+          placeholder="Senha"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          required
+        />
+        <button type="submit" className="botao">
+          CADASTRAR
+        </button>
 
         <div className="linha-com-texto">
           <hr className="linha-horizontal" />
@@ -34,7 +76,7 @@ export default function Cadastro() {
         <button className="botao-criar" onClick={handleLogin}>
           FAZER LOGIN
         </button>
-      </div>
+      </form>
     </StyledCadastro>
   );
 }
