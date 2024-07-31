@@ -1,0 +1,47 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Diretórios de desenvolvimento
+env/
+venv/
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Banco de dados SQLite
+*.sqlite3
+
+# Arquivos do sistema
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de configurações locais
+*.env
+.env.*
+
+# Diretórios de compilação
+build/
+dist/
+*.egg-info/
+
+# Arquivos de cache do Django
+staticfiles/
+media/
+*.bak
+
+# Arquivos do Node.js
+node_modules/
+npm-debug.log
+
+# Arquivos de migração
+*.pyc
+migrations/
+
+# Configurações de secret key
+SECRET_KEY

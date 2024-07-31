@@ -1,17 +1,35 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import handleLogin from "../components/Login";
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const onLoginSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Tentando logar com:", { username, password });
+    const success = await handleLogin(username, password);
+    if (success) {
+      console.log("Login bem-sucedido!");
+      navigate("/home");
+    } else {
+      console.log("Falha no login");
+      setError("Falha no login. Por favor, verifique suas credenciais.");
+    }
+  };
+
+  const handleCriarConta = () => {
+    navigate("/cadastro");
+  };
 
   document.body.style.margin = "0";
   document.body.style.height = "100vh";
   document.body.style.background =
     "linear-gradient(80deg, rgba(191,113,209,1) 0%, rgba(255, 152, 216, 0.9) 60%, rgba(255, 152, 216, 1) 100%)";
-
-  const handleCriarConta = () => {
-    navigate("/cadastro");
-  };
 
   return (
     <StyledLogin>
@@ -20,11 +38,26 @@ export default function Login() {
       <p className="titulo">Por Favor, Faça o Login.</p>
 
       {/* INPUTS DE ENTRADA */}
-      <div className="inputs">
-        <input className="entrada" placeholder="Usuário" />
-        <input className="entrada" type="password" placeholder="Senha" />
-        <button className="botao">ENTRAR</button>
-
+      <form className="inputs" onSubmit={onLoginSubmit}>
+        <input
+          className="entrada"
+          placeholder="Usuário"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <input
+          className="entrada"
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit" className="botao">
+          ENTRAR
+        </button>
+        {error && <p className="error">{error}</p>}
         <div className="linha-com-texto">
           <hr className="linha-horizontal" />
           <span className="texto-no-meio">Ou</span>
@@ -33,7 +66,7 @@ export default function Login() {
         <button className="botao-criar" onClick={handleCriarConta}>
           CRIAR UMA CONTA
         </button>
-      </div>
+      </form>
     </StyledLogin>
   );
 }
@@ -122,5 +155,12 @@ const StyledLogin = styled.main`
     white-space: nowrap;
     color: #fff;
     font-size: 16px;
+  }
+  .error {
+    color: #bd3030;
+    margin-top: 10px;
+    background-color: #ffff;
+    padding: 15px;
+    border-radius: 15px;
   }
 `;

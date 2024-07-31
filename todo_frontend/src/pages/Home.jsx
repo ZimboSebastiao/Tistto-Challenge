@@ -11,25 +11,8 @@ export default function Home() {
 
   return (
     <StyledHome>
-      <div className="imagem-fundo"></div>
-      <p>Olá 👋!</p>
-      <p className="titulo">Vamos começar</p>
-
-      {/* INPUTS DE ENTRADA */}
-      <div className="inputs">
-        <input className="entrada" placeholder="Nome" />
-        <input className="entrada" type="email" placeholder="E-mail" />
-        <input className="entrada" type="password" placeholder="Senha" />
-        <button className="botao">CADASTRAR</button>
-
-        <div className="linha-com-texto">
-          <hr className="linha-horizontal" />
-          <span className="texto-no-meio">Ou</span>
-          <hr className="linha-horizontal" />
-        </div>
-        <button className="botao-criar" onClick={handleLogin}>
-          FAZER LOGIN
-        </button>
+      <div>
+        <p>Home!</p>
       </div>
     </StyledHome>
   );

@@ -1,0 +1,92 @@
+Se você ainda está usando o SQLite e deseja containerizar seu projeto Django, o Dockerfile pode ser mais simples, já que não precisa incluir um serviço de banco de dados separado. Aqui está como você pode configurar um Dockerfile para seu projeto Django com SQLite:
+
+### Estrutura do Projeto
+
+Certifique-se de que seu projeto Django tenha a seguinte estrutura básica:
+
+```
+/seu_projeto
+│
+├── /app
+│   ├── manage.py
+│   ├── /seu_app
+│   └── ...
+├── requirements.txt
+└── Dockerfile
+```
+
+### Criando o `requirements.txt`
+
+Se você ainda não tem um arquivo `requirements.txt`, crie um com todas as dependências do seu projeto. Use o seguinte comando para gerar o arquivo:
+
+```bash
+pip freeze > requirements.txt
+```
+
+### Dockerfile
+
+Aqui está um exemplo de Dockerfile para o seu projeto Django com SQLite:
+
+```dockerfile
+# Use a imagem oficial do Python como base
+FROM python:3.9-slim
+
+# Define o diretório de trabalho
+WORKDIR /app
+
+# Copie o arquivo de requisitos para o contêiner
+COPY requirements.txt /app/
+
+# Instale as dependências do Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copie todo o projeto para o diretório de trabalho
+COPY . /app/
+
+# Defina as variáveis de ambiente para o Django
+ENV DJANGO_SETTINGS_MODULE=seu_projeto.settings
+ENV PYTHONUNBUFFERED 1
+
+# Exponha a porta que o Django usará
+EXPOSE 8000
+
+# Comando para rodar a aplicação
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+```
+
+### Explicações
+
+- **Base Image**: `FROM python:3.9-slim` usa uma imagem leve do Python como base.
+- **Diretório de Trabalho**: `WORKDIR /app` define o diretório de trabalho dentro do contêiner.
+- **Copia de Requisitos**: `COPY requirements.txt /app/` e `RUN pip install...` copia e instala as dependências.
+- **Copia do Projeto**: `COPY . /app/` copia todos os arquivos do seu projeto para o contêiner.
+- **Variáveis de Ambiente**: Define o módulo de configurações do Django e desabilita o buffer do Python.
+- **Porta Exposta**: `EXPOSE 8000` especifica que o contêiner irá expor a porta 8000.
+- **Comando de Execução**: `CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]` roda o servidor de desenvolvimento do Django.
+
+### Construir e Executar o Contêiner
+
+1. **Construir a Imagem Docker:**
+
+   Navegue até o diretório que contém o Dockerfile e execute:
+
+   ```bash
+   docker build -t seu_projeto_django .
+   ```
+
+2. **Rodar o Contêiner:**
+
+   Após a construção, execute o contêiner com o seguinte comando:
+
+   ```bash
+   docker run -p 8000:8000 seu_projeto_django
+   ```
+
+   Isso mapeia a porta 8000 do contêiner para a porta 8000 da máquina host.
+
+### Considerações Finais
+
+- **Persistência de Dados**: Com SQLite, os dados são armazenados localmente no contêiner. Para persistir os dados entre reinicializações, você pode mapear volumes do Docker para o sistema de arquivos do host.
+- **Configurações de Produção**: Lembre-se de que este setup é ideal para desenvolvimento. Em produção, você deve considerar o uso de um servidor WSGI como Gunicorn e um servidor web como Nginx.
+
+Usar Docker para containerizar seu projeto simplifica a distribuição e implantação em ambientes diferentes, garantindo consistência entre desenvolvimento e produção.
