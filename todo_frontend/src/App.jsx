@@ -5,8 +5,6 @@ import Cadastro from "./pages/Cadastro";
 import Home from "./pages/Home";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Router>
       <Routes>

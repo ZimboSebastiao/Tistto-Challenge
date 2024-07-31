@@ -11,7 +11,7 @@ export default function Login() {
 
   const onLoginSubmit = async (e) => {
     e.preventDefault();
-    console.log("Tentando logar com:", { username, password });
+    // console.log("Tentando logar com:", { username, password });
     const success = await handleLogin(username, password);
     if (success) {
       console.log("Login bem-sucedido!");
